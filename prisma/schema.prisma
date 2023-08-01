@@ -8,26 +8,53 @@ generator client {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  password String
-  Post     Post[]
-  Like     Like[]
+  id          Int          @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String       @unique
+  userName    String       @unique
+  password    String
+  collections Collection[]
+  posts       Post[]       @relation("UserSavedPosts")
+  likes       Like[]
+  following   Following[]  @relation("UserFollowing")
+  followers   Following[]  @relation("UserFollowers")
 }
 
-model Post {
+model Following {
+  id          Int  @id @default(autoincrement())
+  follower    User @relation("UserFollowing", fields: [followerId], references: [id])
+  followerId  Int
+  following   User @relation("UserFollowers", fields: [followingId], references: [id])
+  followingId Int
+
+  @@unique([followerId, followingId])
+}
+
+model Collection {
   id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
-  body      String
   timeStamp DateTime @default(now())
-  like      Like[]
+  posts     Post[]   @relation("CollectionPosts")
+}
+
+model Post {
+  id          Int          @id @default(autoincrement())
+  user        User         @relation("UserSavedPosts", fields: [userId], references: [id])
+  userId      Int
+  body        String
+  timeStamp   DateTime     @default(now())
+  likes       Like[]       @relation("PostLikes")
+  collections Collection[] @relation("CollectionPosts")
 }
 
 model Like {
   id     Int  @id @default(autoincrement())
-  post   Post @relation(fields: [postId], references: [id])
+  post   Post @relation("PostLikes", fields: [postId], references: [id])
   postId Int
   user   User @relation(fields: [userId], references: [id])
   userId Int
+
+  @@unique([postId, userId])
 }
