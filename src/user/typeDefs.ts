@@ -1,6 +1,5 @@
-import { gql } from 'apollo-server';
 
-export const typeDefs = gql`
+export const typeDefs = `
   scalar DateTime
 
   type User {
@@ -38,8 +37,8 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    signup(input: SignupInput!): AuthPayload
-    login(input: LoginInput!): AuthPayload
+    signup( firstName: String!, lastName: String!, email: String!, password: String!, userName: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
     refreshTokens(refreshToken: String!): AuthPayload
   }
 `;

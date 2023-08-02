@@ -27,8 +27,9 @@ export const resolvers = {
     },
   },
   mutations: {
-    signup: async (parent: any, { input }: { input: SignupInput }, context: any) => {
-      const { email, password, firstName, lastName, userName } = input;
+    signup: async (parent: any, payload: SignupInput, context: any) => {
+      const { email, password, firstName, lastName, userName } = payload;
+      console.log("email,",email)
 
       // Check if user with the same email already exists
       const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -62,8 +63,8 @@ export const resolvers = {
         refreshToken,
       };
     },
-    login: async (parent: any, { input }: { input: LoginInput }, context: any) => {
-      const { email, password } = input;
+    login: async (parent: any, payload: LoginInput, context: any) => {
+      const { email, password } = payload;
       const user = await prisma.user.findUnique({ where: { email } });
       if (!user) {
         throw new AuthenticationError('Invalid email or password');

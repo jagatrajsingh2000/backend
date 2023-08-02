@@ -1,11 +1,11 @@
 import { ApolloServer } from 'apollo-server';
 import { User } from './user';
-import { PrismaClient } from '@prisma/client'; // Import the typeDefs from typeDefs.ts
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const server = new ApolloServer({
   typeDefs:`
-  ${User.typeDefs}`, // Use the imported typeDefs here
+  ${User.typeDefs}`,
   resolvers: {
     Query: {
       ...User.resolvers.queries,
