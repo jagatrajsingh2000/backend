@@ -7,7 +7,7 @@ export const generateAccessToken = (user: { id: number }): string => {
 };
 
 export const getUserId = (context: any): number => {
-  const Authorization = context.req.headers.authorization;
+  const Authorization = context.req.headers.accessToken;
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '');
     const { userId } = jwt.verify(token, APP_SECRET) as { userId: number };

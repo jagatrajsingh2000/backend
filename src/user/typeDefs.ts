@@ -18,20 +18,7 @@ export const typeDefs = `
     accessToken: String!
     refreshToken: String!
   }
-
-  input SignupInput {
-    email: String!
-    password: String!
-    firstName: String
-    lastName: String
-    userName: String!
-  }
-
-  input LoginInput {
-    email: String!
-    password: String!
-  }
-
+  
   type Query {
     me: User
   }

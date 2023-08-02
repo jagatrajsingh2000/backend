@@ -43,7 +43,13 @@ model Post {
   id          Int          @id @default(autoincrement())
   user        User         @relation("UserSavedPosts", fields: [userId], references: [id])
   userId      Int
-  body        String
+  title       String
+  description String?
+  tag         String[]
+  image       String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  views       Int?
   timeStamp   DateTime     @default(now())
   likes       Like[]       @relation("PostLikes")
   collections Collection[] @relation("CollectionPosts")
