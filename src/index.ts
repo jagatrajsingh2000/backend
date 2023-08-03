@@ -1,32 +1,29 @@
-import { ApolloServer } from 'apollo-server';
-import { User } from './user';
-import { Post } from './posts';
-import { PrismaClient } from '@prisma/client';
-import { getUserId } from './auth';
-const prisma = new PrismaClient();
+import express from "express";
+import { expressMiddleware } from "@apollo/server/express4";
+import createAppoloGraphqlServer from "./graphql";
+// import UserService from "./services/user";
+async function init() {
+  const app = express();
+  const PORT = Number(process.env.PORT) || 8000;
 
-const server = new ApolloServer({
-  typeDefs:`
-  ${User.typeDefs},
-  ${Post.typeDefs}`,
-  resolvers: {
-    Query: {
-      ...User.resolvers.queries,
-      ...Post.resolvers.queries
-    },
-    Mutation: {
-      ...User.resolvers.mutations,
-      ...Post.resolvers.mutations
-    },
-  },
-  context: ({ req }) => ({
-    ...req,
-    prisma,
-    userId: req.headers.accessToken && getUserId(req),
-  }),
-});
+  app.use(express.json());
+  app.get("/", (req, res) => {
+    res.json({ message: "Server is up and running" });
+  });
+  app.use("/graphql", expressMiddleware(await createAppoloGraphqlServer(),{
+    context: async ({ req }) => {
+      // @ts-ignore
+      const token = req.headers["token"];
 
-const port = 4000;
-server.listen(port).then(() => {
-  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
-});
+      // try {
+      //   const user = UserService.decodeJWTToken(token as string);
+      //   return { user };
+      // } catch (error) {
+      //   return {};
+      // }
+    }
+  }));
+
+  app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
+}
+init();

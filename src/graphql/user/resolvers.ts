@@ -1,8 +1,8 @@
 import { AuthenticationError } from 'apollo-server';
 import { PrismaClient } from '@prisma/client';
-import { generateAccessToken, getUserId } from '../auth';
+import { generateAccessToken, getUserId } from '../../auth';
 import jwt from 'jsonwebtoken';
-import { APP_SECRET } from '../auth';
+import { APP_SECRET } from '../../auth';
 import bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
