@@ -12,6 +12,9 @@ type Post {
   updatedAt: DateTime!
   views: Int!
 }
+type UpdatePost {
+  title: String!
+}
 
 input CreatePostInput {
   title: String!
@@ -25,7 +28,6 @@ input UpdatePostInput {
   description: String
   tag: [String!]
   image: String
-  body: String
 }
 
 type Query {
@@ -34,8 +36,8 @@ type Query {
 }
 
 type Mutation {
-  createPost(  title: String!, description: String!, tag: [String!]!, image: String!, body: String!,): Post!
-  updatePost(id: Int!, title: String!, description: String!, tag: [String!]!, image: String!, body: String!,): Post!
+  createPost(  title: String!, description: String!, tag: [String!]!, image: String!): Post!
+  updatePost(id: Int!, title: String!, description: String, tag: [String], image: String): UpdatePost!
   deletePost(id: Int!): Post!
 }
 

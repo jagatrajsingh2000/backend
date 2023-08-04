@@ -49,7 +49,7 @@ model Post {
   image       String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now())
-  views       Int?
+  views       Int?         @default(0)
   timeStamp   DateTime     @default(now())
   likes       Like[]       @relation("PostLikes")
   collections Collection[] @relation("CollectionPosts")

@@ -21,7 +21,7 @@ interface SignupInput {
 export const resolvers = {
     queries: {
     me: async (parent: any, args: any, context: any) => {
-      const userId = getUserId(context);
+      const userId = context.userId;
       const user = await prisma.user.findUnique({ where: { id: userId } });
       return user ?? null;
     },
