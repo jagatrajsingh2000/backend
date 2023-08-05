@@ -1,11 +1,7 @@
 import { PrismaClient, Like, Post, User } from '@prisma/client';
 const prisma = new PrismaClient();
 export const resolvers = {
-  // ...existing resolvers...
-
   mutations: {
-    // ...existing mutations...
-
     likePost: async (_: any, { postId }: { postId: number }, context: any) => {
       // Get the authenticated user ID from the context
       const userId = context.userId;

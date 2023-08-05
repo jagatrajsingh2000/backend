@@ -36,7 +36,8 @@ model Collection {
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
   timeStamp DateTime @default(now())
-  posts     Post[]   @relation("CollectionPosts")
+  post      Post     @relation(fields: [postId], references: [id]) 
+  postId    Int      @default(0)
 }
 
 model Post {
@@ -52,7 +53,7 @@ model Post {
   views       Int?         @default(0)
   timeStamp   DateTime     @default(now())
   likes       Like[]       @relation("PostLikes")
-  collections Collection[] @relation("CollectionPosts")
+  collections Collection[] 
 }
 
 model Like {
